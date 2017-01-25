@@ -11,7 +11,6 @@ uses
 type
   TfrmPrincipal = class(TForm)
     Panel1: TPanel;
-    Label1: TLabel;
     edtToken: TEdit;
     StatusBar1: TStatusBar;
     PageControl1: TPageControl;
@@ -38,7 +37,6 @@ type
     memLogMotorRequest: TMemo;
     cdsHistorico: TClientDataSet;
     dsHistorico: TDataSource;
-    Label7: TLabel;
     edtEndereco: TEdit;
     IdHTTP1: TIdHTTP;
     Label8: TLabel;
@@ -50,6 +48,8 @@ type
     btnConsultaCliente: TButton;
     Label13: TLabel;
     memLogConsultaClienteResponse: TMemo;
+    Label7: TLabel;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnMotorClick(Sender: TObject);
     procedure btnConsultaClienteClick(Sender: TObject);
@@ -108,6 +108,10 @@ var request  : TlkJSONobject;
 begin
   btnMotor.Enabled := false;
 
+  memLogMotorRequest.Clear;
+  memLogMotorResponse.Clear;
+  Application.ProcessMessages;
+
   try
     try
       // Monta o JSON de Request
@@ -121,7 +125,7 @@ begin
       Application.ProcessMessages;
 
       IdHTTP1.Request.CustomHeaders.Clear;
-      IdHTTP1.Request.CustomHeaders.AddValue('Authorization', edtToken.Text);
+      IdHTTP1.Request.CustomHeaders.AddValue('x-api-key', edtToken.Text);
       IdHTTP1.Request.ContentType := 'application/json';
 
       memLogMotorResponse.Lines.Text := IdHTTP1.Post(edtEndereco.Text+'/motor', json);
@@ -292,11 +296,13 @@ end;
 procedure TfrmPrincipal.btnConsultaClienteClick(Sender: TObject);
 begin
   btnConsultaCliente.Enabled := false;
+  memLogConsultaClienteResponse.Clear;
+  Application.ProcessMessages;
 
   try
     try
       IdHTTP1.Request.CustomHeaders.Clear;
-      IdHTTP1.Request.CustomHeaders.AddValue('Authorization', edtToken.Text);
+      IdHTTP1.Request.CustomHeaders.AddValue('x-api-key', edtToken.Text);
       IdHTTP1.Request.ContentType := 'application/json';
 
       memLogConsultaClienteResponse.Lines.Text := IdHTTP1.Get(edtEndereco.Text+'/cliente/'+edtConsultaCliente.Text);

@@ -23,19 +23,19 @@ object frmPrincipal: TfrmPrincipal
     Height = 65
     Align = alTop
     TabOrder = 0
+    object Label7: TLabel
+      Left = 46
+      Top = 37
+      Width = 49
+      Height = 13
+      Caption = 'Endereco '
+    end
     object Label1: TLabel
       Left = 8
       Top = 13
       Width = 84
       Height = 13
       Caption = 'Token de Acesso'
-    end
-    object Label7: TLabel
-      Left = 43
-      Top = 37
-      Width = 49
-      Height = 13
-      Caption = 'Endereco '
     end
     object edtToken: TEdit
       Left = 98
@@ -50,9 +50,7 @@ object frmPrincipal: TfrmPrincipal
       Width = 601
       Height = 21
       TabOrder = 1
-      Text = 
-        'https://ezccenfns7.execute-api.us-east-1.amazonaws.com/productio' +
-        'n/'
+      Text = 'https://api.meucrediario.com.br/v1'
     end
   end
   object StatusBar1: TStatusBar
